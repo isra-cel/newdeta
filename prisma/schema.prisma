@@ -28,3 +28,11 @@ model Post {
   author    User    @relation(fields: [authorId], references: [id]) 
 } 
 
+model SidebarItem {
+  id    Int    @id @default(autoincrement())
+  name  String
+  link  String
+  icon  String
+}
+
+
