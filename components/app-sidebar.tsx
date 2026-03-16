@@ -14,9 +14,12 @@ import {
 import { ChevronDown, Plus, Settings, User2 } from "lucide-react"
 import Link from "next/link"
 import { Collapsible } from "radix-ui"
-
+import * as Icons from "lucide-react"
+import prisma from "@/lib/prisma"
 
 export async function AppSidebar() {
+  const items = await prisma.sidebarItem.findMany()
+  console.log(items,"app sidebar content is here")
   return (
     <Sidebar>
   <SidebarHeader>
@@ -37,18 +40,22 @@ export async function AppSidebar() {
 
 
 
-   <SidebarContent>
-{/* <Link href="https://www.google.com">
-  <SidebarGroup>
-    <SidebarGroupLabel>
-        Settings 
-    <Settings />
-    </SidebarGroupLabel>
-  </SidebarGroup>
-</Link> */}
+ <SidebarContent>
+  {items.map((item) => {
+    const Icon = Icons[item.icon as keyof typeof Icons] as React.ElementType
 
-
-
+    // add the objects individually into the sidebar by maping the 
+    return (
+      <Link key={item.id} href={item.link}>
+        <SidebarGroup>
+          <SidebarGroupLabel className="flex items-center gap-2">
+            {Icon && <Icon size={16} />}
+            {item.name}
+          </SidebarGroupLabel>
+        </SidebarGroup>
+      </Link>
+    )
+  })}
 </SidebarContent>
 
   
