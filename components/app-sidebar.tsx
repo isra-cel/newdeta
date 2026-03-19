@@ -18,7 +18,9 @@ import * as Icons from "lucide-react"
 import prisma from "@/lib/prisma"
 
 export async function AppSidebar() {
-  const items = await prisma.sidebarItem.findMany()
+  const items = await prisma.sidebarItem.findMany({
+    orderBy: { id: "asc" }
+  })
   console.log(items,"app sidebar content is here")
   return (
     <Sidebar>
