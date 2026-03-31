@@ -9,8 +9,7 @@ export async function createSidebarItem(formData: FormData) {
   const link = formData.get("link") as string
 
   if (!name || !icon || !link) {
-    throw new Error("All fields are required")
-  }
+    throw new Error("All fields are required")}
 
   await prisma.sidebarItem.create({
     data: {
@@ -21,5 +20,14 @@ export async function createSidebarItem(formData: FormData) {
   })
 
   // refresh sidebar
+  revalidatePath("/")
+}
+
+export async function deleteSidebarItem(id: number) {
+
+  await prisma.sidebarItem.delete({
+    where: { id },
+  })
+
   revalidatePath("/")
 }
